@@ -4,6 +4,7 @@
     "url": "https://www.caseking.de/search?sSearch=",
     "separator": "+",
     "location": "Germany",
+    "shipping": "-",
     "currency": "EUR",
     "itemList": {
       "tag": "div",
@@ -27,10 +28,39 @@
     }
   },
   {
+    "website": "MindFactory",
+    "url": "https://www.mindfactory.de/search_result.php?select_search=0&search_query=",
+    "separator": "+",
+    "location": "Germany",
+    "shipping": "8.99",
+    "currency": "EUR",
+    "itemList": {
+      "tag": "div",
+      "type": "class",
+      "title": "p"
+    },
+    "brandItem": {
+      "tag": "div",
+      "type": "class",
+      "title": "pname"
+    },
+    "productItem": {
+      "tag": "div",
+      "type": "class",
+      "title": "pname"
+    },
+    "priceItem": {
+      "tag": "div",
+      "type": "class",
+      "title": "pprice"
+    }
+  },
+  {
     "website": "x-kom",
-    "url": "https://www.x-kom.pl/szukaj?q=",
+    "url": "https://www.x-kom.pl/szukaj?sort_by=accuracy_desc&f[manufacturers][3]=1&q=",
     "separator": "%20",
     "location": "Poland",
+    "shipping": "9.90",
     "currency": "PLN",
     "itemList": {
       "tag": "div",
