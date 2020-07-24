@@ -1,0 +1,57 @@
+[
+  {
+    "website": "Caseking",
+    "url": "https://www.caseking.de/search?sSearch=",
+    "separator": "+",
+    "location": "Germany",
+    "currency": "EUR",
+    "itemList": {
+      "tag": "div",
+      "type": "class",
+      "title": "artbox grid_5 last"
+    },
+    "brandItem": {
+      "tag": "span",
+      "type": "class",
+      "title": "ProductSubTitle"
+    },
+    "productItem": {
+      "tag": "span",
+      "type": "class",
+      "title": "ProductTitle"
+    },
+    "priceItem": {
+      "tag": "span",
+      "type": "class",
+      "title": "price"
+    }
+  },
+  {
+    "website": "x-kom",
+    "url": "https://www.x-kom.pl/szukaj?q=",
+    "separator": "%20",
+    "location": "Poland",
+    "currency": "PLN",
+    "itemList": {
+      "tag": "div",
+      "type": "class",
+      "title": "sc-162ysh3-1 cVKkKd sc-bwzfXH dXCVXY"
+    },
+    "brandItem": {
+      "tag": "h3",
+      "type": "class",
+      "title": "sc-1yu46qn-12 edAUTq sc-16zrtke-0 hovdBk"
+    },
+    "productItem": {
+      "tag": "h3",
+      "type": "class",
+      "title": "sc-1yu46qn-12 edAUTq sc-16zrtke-0 hovdBk"
+    },
+    "priceItem": {
+      "tag": "span",
+      "type": "class",
+      "title": "sc-6n68ef-0 sc-6n68ef-3 iertXt"
+    }
+  }
+]
+

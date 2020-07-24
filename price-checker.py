@@ -1,33 +1,46 @@
-from urllib.request import urlopen as request
-from bs4 import BeautifulSoup as bsoup
+from functions import *
 
 input = input("[Brand, Product]: ")
 brandInput, nameInput = input.split(", ")
+websites = GetJSON("websites.json")
 products = []
 
-# X-KOM
-url = "https://www.x-kom.pl/szukaj?q=" + brandInput.replace(" ", "%20") + nameInput.replace(" ", "%20")
-client = request(url)
-page_html = client.read()
-client.close()
-page_html = bsoup(page_html, "html.parser")
+for website in websites:
+    pageHTML = GetPage(website["url"], website["separator"], brandInput, nameInput)
+    itemList = pageHTML.findAll(
+        website["itemList"]["tag"], { 
+        website["itemList"]["type"] : website["itemList"]["title"]
+    })
 
-items = page_html.findAll("div", {"class" : "sc-162ysh3-1 cVKkKd sc-bwzfXH dXCVXY"})
-
-for item in items:
-    brandName = item.findAll("h3", {"class" : "sc-1yu46qn-12 edAUTq sc-16zrtke-0 hovdBk"})[0].text.strip().split(" ", 1)[0]
-     
-    if(brandName.lower() == brandInput.lower()):
-        productName = item.findAll("h3", {"class" : "sc-1yu46qn-12 edAUTq sc-16zrtke-0 hovdBk"})[0].text.split(" ", 1)[1]
-        currentPrice = item.findAll("span", {"class" : "sc-6n68ef-0 sc-6n68ef-3 iertXt"})[0].text.strip().rsplit(" ", 1)[0].replace(" ", "").replace(",", ".")
+    for item in itemList:
+        brandName = item.findAll(
+            website["brandItem"]["tag"], {
+            website["brandItem"]["type"] : website["brandItem"]["title"]
+        })[0].text    
+        brandName = FormatBrand(website["website"], brandName)
     
-        products.append({
-            "brand" : brandName,
-            "product" : productName,
-            "price" : float(currentPrice),
-            "website" : "x-kom"
-        })
+        if brandName.lower() == brandInput.lower().strip():
+            productName = item.findAll(
+                website["productItem"]["tag"], {
+                website["productItem"]["type"] : website["productItem"]["title"]
+            })[0].text
+            productName = FormatProduct(website["website"], productName)
+        
+            currentPrice = item.findAll(
+                website["priceItem"]["tag"], {
+                website["priceItem"]["type"] : website["priceItem"]["title"]
+            })[0].text
+            currentPrice = FormatPrice(website["website"], currentPrice)
+            
+            products.append({
+                "brand" : brandName,
+                "product" : productName,
+                "price" : float(currentPrice),
+                "currency" : website["currency"],
+                "website" : website["website"]
+            })
 
-# Display products sorted by price in ascending order
-for product in products:
-    print("Product: " + str(product["price"]) + " | " + product["brand"] + " | " + product["product"])    
+products = sorted(products, key = lambda k: k["price"])
+
+for product in products:    
+    print("Product: %.2f %s | %s | %s | %s" % (product["price"], product["currency"], product["website"], product["brand"], product["product"]))
