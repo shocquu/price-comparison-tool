@@ -1,30 +1,32 @@
-from urllib.request import urlopen as req
-from bs4 import BeautifulSoup as bsoup
-
 from lxml import html
 import requests
 
-page = requests.get('https://www.alternate.de/html/search.html?query=rx+580&x=0&y=0')
-tree = html.fromstring(page.content)
-print(tree)
+url = "https://www.x-kom.pl/szukaj?per_page=90&sort_by=accuracy_desc&q=msi%202080"
+headers = { "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html" }    
+page = requests.get(url, headers)
+pageHTML = html.fromstring(page.content)
 
-#url = "https://www.mindfactory.de/search_result.php?select_search=0&search_query=amd+ryzen"
-#client = req(url)
-#page_html = client.read()
-#client.close()
-#page_html = bsoup(page_html, "html.parser")
+brands = pageHTML.xpath("//*[@id='listing-container']//div[1]/a/h3/span/text()")
+products = pageHTML.xpath("//*[@id='listing-container']//div[1]/a/h3/span/text()")
+prices = pageHTML.xpath("//*[@id='listing-container']//div/div/div/div/span[last()]/text()")
+test = pageHTML.xpath("//*[@id='listing-container']/div[1]/div/div[2]/div[2]/div[1]/a/h3/span/text()")
 
-#page_html = bsoup(html, "html.parser")
-#items = page_html.findAll("div", {"class" : "p"})
+#digits = pageHTML.xpath(website["items"]["digits"])
+#prices = [i + j for i, j in zip(prices, digits)] 
 
-#for item in items:
-    #brandName = item.findAll("div", {"class" : "pname"})[0].text.split(" ")[0]
-    #print(brandName)
-    #productName = item.findAll("div", {"class" : "pname"})[0].text.split(" ", 1)[1]
-    #print(productName)
-    #currentPrice = item.findAll("div", {"class" : "pprice"})[0].text.replace(" €\xa0", "").replace("*", "").replace(",", ".")
-    #currentPrice = item.findAll("div", {"class" : "pprice"})[0].text.strip().strip().replace("€\xa0", "").replace("*", "").replace(".", "").replace(",", ".")
-    #print(currentPrice)
+#for i in range(len(brands)):
+#    if brands[i].lower() == input[0].lower().strip():
+#        results.append({
+#            "brand" : FormatBrand(website["website"], brands[i]),
+#            "product" : FormatProduct(website["website"], products[i]),
+#            "price" : float(FormatPrice(website["website"], prices[i])),
+#            "currency" : website["currency"],
+#            "website" : website["website"]
+#        })
 
-    #print("{} | {} | {}".format(currentPrice, brandName, productName,)) 
         
+
+#results = sorted(results, key = lambda k: k["price"])
+
+#for result in results:
+#    print("{} {} | {} | {} | {}".format(result["price"], result["currency"], result["website"], result["brand"], result["product"]))

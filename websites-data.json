@@ -1,0 +1,58 @@
+[
+  {
+    "website": "Caseking",
+    "url": "https://www.caseking.de/search?sSearch=",
+    "separator": "+",
+    "location": "Germany",
+    "shipping": "-",
+    "currency": "EUR",
+    "items": {
+      "brands": "//*[@id='listing-4col']//span[@class='ProductSubTitle']/text()",
+      "products": "//*[@id='listing-4col']//span[@class='ProductTitle']/text()",
+      "prices": "//*[@id='listing-4col']//span[@class='price']/text()",
+      "decimals": "//."
+    }
+  },
+  {
+    "website": "MindFactory",
+    "url": "https://www.mindfactory.de/search_result.php?select_search=0&search_query=",
+    "separator": "+",
+    "location": "Germany",
+    "shipping": "8.99",
+    "currency": "EUR",
+    "items": {
+      "brands": "//*[@id='bProducts']//div[@class='pname']/text()",
+      "products": "//*[@id='bProducts']//div[@class='pname']/text()",
+      "prices": "//*[@id='bProducts']//span[@class='text-currency']/following-sibling::text()",
+      "decimals": "//*[@id='bProducts']//span[@class='text-currency']/following-sibling::text()"
+    }
+  },
+  {
+    "website": "Alternate",
+    "url": "https://www.alternate.de/html/search.html?query=",
+    "separator": "+",
+    "location": "Germany",
+    "shipping": "-",
+    "currency": "EUR",
+    "items": {
+      "brands": "//*[@id='pageContent']/div[2]/div[3]//a/span[1]/span[2]/span[1]/span[1]/text()",
+      "products": "//*[@id='pageContent']/div[2]/div[3]//a/span[1]/span[2]/span[1]/span[2]/text()",
+      "prices": "//*[@id='pageContent']/div[2]/div[3]//span[@class='price right right10']/text()",
+      "decimals": "//*[@id='pageContent']/div[2]/div[3]//div[2]/p/span/sup/text()"
+    }
+  },
+  {
+    "website": "x-kom",
+    "url": "https://www.x-kom.pl/szukaj?per_page=90&sort_by=accuracy_desc&q=",
+    "separator": "%20",
+    "location": "Poland",
+    "shipping": "9.90",
+    "currency": "PLN",
+    "items": {
+      "brands": "//*[@id='listing-container']//div[1]/a/h3/span/text()",
+      "products": "//*[@id='listing-container']//div[1]/a/h3/span/text()",
+      "prices": "//*[@id='listing-container']//div/div/div/div/span[last()]/text()",
+      "decimals": "//*[@id='listing-container']//div/div/div/div/span[first()]/text()"
+    }
+  }
+]
