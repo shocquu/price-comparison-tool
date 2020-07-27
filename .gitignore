@@ -1,2 +1,4 @@
 /__pycache__
-test-website
+/.vscode
+test-website.py
+list.todo

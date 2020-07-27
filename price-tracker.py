@@ -1,10 +1,10 @@
-from functions import *
+from modules.functions import *
 
 input = input("[Brand Product]: ").split(" ", 1)
-websites = GetJSON("websites-data.json")
+websites = GetJSON("data/websites-data.json")
 keywords = input[1].lower().split(" ")
-limit = 0
 results = []
+limit = 0
 
 for website in websites:
     url =  GetURL(website["url"], website["separator"], input)    
@@ -18,7 +18,7 @@ for website in websites:
     
     for i in range(len(brands)):
         brand = FormatBrand(website["website"], brands[i])
-
+        
         if brand.lower() in input[0].lower().strip(): 
             product = FormatProduct(website["website"], products[i])            
 
