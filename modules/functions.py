@@ -3,15 +3,15 @@ import requests
 import requests_cache
 import json
 
-def GetURL(url, separator, input):
-    #url += input[0].replace(" ", separator) + separator + input[1].replace(" ", separator)
+def GetURL(url, separator, input):    
     url = url.format(input[0].replace(" ", separator), separator, input[1].replace(" ", separator))
     return url
 
 def GetPage(url):   
     headers = { "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html" }
     requests_cache.install_cache("./data/cached-results", expire_after = 3600)
-    page = requests.get(url, headers)
+    requests_cache.remove_expired_responses() 
+    page = requests.get(url, headers)       
     return html.fromstring(page.content)
 
 def GetJSON(path):
@@ -26,25 +26,52 @@ def LookForKeywords(keywords, product):
             isMatching = False
     return isMatching         
 
-def DisplayResults(results, limit):
+def SortByPrice(results):
     results = sorted(results, key = lambda k: k["price"])
-    limit = len(results) if limit == 0 else limit
+    return results
 
+def GetTemplate():
+    header = f'| {"PRICE":14} | {"WEBSITE":14} | {"BRAND":12} | {"PRODUCT NAME":70} |'
+    border = "+----------------+----------------+--------------+------------------------------------------------------------------------+"
+    return header, border
+
+def DisplayResults(results):    
     if len(results) > 0:
-        print("\n+-------------------+----------------+--------------+----------------------------------------------------------------------------------+")       
-        print(f'| {"   PRICE":17} | {"WEBSITE":14} | {"BRAND":12} | {"PRODUCT NAME":80} |')
-        print("+-------------------+----------------+--------------+----------------------------------------------------------------------------------+")
+        header, border= GetTemplate()        
 
-        for i in range(limit):            
-            print(f'| {results[i]["price"]:>10.2f} {results[i]["currency"]:<6} | {results[i]["website"]:14} | {results[i]["brand"]:<12} | {results[i]["product"]:<80} |')
+        print(border)
+        print(header)
+        print(border)
         
-        print("+-------------------+----------------+--------------+----------------------------------------------------------------------------------+\n")
+        for i in range(len(results)):
+            print(f'| {results[i]["price"]:>7.2f} {results[i]["currency"]:<6} | {results[i]["website"]:14} | {results[i]["brand"]:<12} | {results[i]["product"]:<70} |')
+           
+        print(border)        
     else:
-        print("Sorry, we couldn't find any results.")
+        print("No results matching your criteria.")
+
+def DisplayCart(results, total):
+    if len(results) > 0:        
+        header, border= GetTemplate()
+        header = header[:16] + f' | {"QTY":3} ' + header[16:51] + f'{"PRODUCT NAME":63} |'
+        border = border[:24] + "+------" + border[24:50] + border[57:]
+
+        print(border)
+        print(header)
+        print(border)
+
+        for i in range(len(results)):            
+            print(f'| {results[i]["price"]:>7.2f} {results[i]["currency"]:<6} | {results[i]["qty"]:<4} | {results[i]["website"]:14} | {results[i]["brand"]:<12} | {results[i]["product"]:<63} |')
+
+        print(border)
+        print(f'| {"TOTAL:":>107} {total:>7.2f} {results[0]["currency"]:>3} |')
+        print("+-------------------------------------------------------------------------------------------------------------------------+")
+    else:
+        print("It look like your cart is empty.")
 
 def IsDigit(name):
     if name[0].isdigit():
-        number = name.split(" ", 1)[0]        
+        number = name.split(" ", 1)[0]
         return name.split(" ", 1)[1] + " " + number
     else:
         return name

@@ -1,0 +1,3 @@
+evga 2080 super, 1
+amd ryzen 2600, 1
+crucial ballistix elite 8gb, 2
